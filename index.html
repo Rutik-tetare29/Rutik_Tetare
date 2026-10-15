@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rutik Tetare | Computer Engineering Student, AI/ML & Data Analytics</title>
+<meta name="description" content="Portfolio of Rutik Tetare, a Computer Engineering undergraduate working with Python, machine learning, SQL and Power BI.">
+<meta name="theme-color" content="#0a1226">
+<style>
+/* ========== THEME ========== */
+:root{
+  --bg:#0a1226; --bg2:#0f1b36; --card:#111f3d; --line:#1f3157;
+  --text:#eaf1ff; --muted:#9db0d3; --cyan:#38e1ff; --blue:#4d8dff; --violet:#9b7bff;
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1100px,92%);margin-inline:auto}
+section{padding:96px 0}
+h2{font-size:clamp(1.7rem,3.4vw,2.3rem);letter-spacing:-.02em;margin-bottom:12px}
+.lead{color:var(--muted);max-width:62ch;margin-bottom:40px}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));z-index:100}
+
+/* ========== NAV ========== */
+header{position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(10,18,38,.85);backdrop-filter:blur(12px);border-color:var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+.logo span{color:var(--cyan)}
+.links{display:flex;gap:6px;list-style:none}
+.links a{padding:8px 14px;border-radius:999px;color:var(--muted);font-size:.93rem;transition:.2s}
+.links a:hover,.links a.active{color:var(--text);background:rgba(56,225,255,.1)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--text);width:42px;height:42px;border-radius:10px;cursor:pointer}
+.burger svg{width:22px;height:22px}
+
+/* ========== HERO ========== */
+#home{min-height:100vh;display:flex;align-items:center;position:relative;padding:110px 0 70px;
+  background:radial-gradient(900px 500px at 85% 20%,rgba(77,141,255,.18),transparent 60%),radial-gradient(700px 400px at 0% 100%,rgba(155,123,255,.12),transparent 60%)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hello{color:var(--cyan);font-family:var(--mono);font-size:.95rem;margin-bottom:10px}
+h1{font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.05;letter-spacing:-.035em;
+  background:linear-gradient(120deg,#fff 30%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{font-size:clamp(1.05rem,2.2vw,1.35rem);margin:14px 0;color:var(--text);min-height:1.8em}
+.role b{color:var(--cyan);font-weight:600}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--cyan);margin-left:3px;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.intro{color:var(--muted);max-width:54ch;margin-bottom:28px}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:12px;font-weight:600;font-size:.97rem;border:1px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer}
+.btn.primary{background:linear-gradient(120deg,var(--cyan),var(--blue));color:#04101f;border:0}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(56,225,255,.5);border-color:var(--cyan)}
+.social{display:flex;gap:10px;flex-wrap:wrap}
+.social a{display:inline-flex;align-items:center;gap:8px;color:var(--muted);padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:.9rem;transition:.2s}
+.social a:hover{color:var(--cyan);border-color:var(--cyan)}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* K-Means visual */
+.viz{position:relative;aspect-ratio:1/1;max-width:460px;width:100%;margin-inline:auto;border:1px solid var(--line);border-radius:24px;background:rgba(15,27,54,.6);overflow:hidden;box-shadow:0 30px 80px -30px rgba(56,225,255,.25)}
+.viz canvas{width:100%;height:100%;display:block}
+.viz figcaption{position:absolute;left:14px;bottom:12px;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+.viz .dots{position:absolute;top:12px;left:14px;display:flex;gap:6px}
+.viz .dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+
+/* ========== ABOUT / STATS ========== */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+.about p{color:var(--muted);margin-bottom:16px}
+.about p strong{color:var(--text);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.stat b{display:block;font-size:2rem;letter-spacing:-.03em;color:var(--cyan)}
+.stat span{font-size:.85rem;color:var(--muted)}
+
+/* ========== SKILLS ========== */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(56,225,255,.5)}
+.card h3{font-size:1.05rem;margin-bottom:14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{font-size:.85rem;padding:5px 12px;border-radius:999px;background:rgba(77,141,255,.12);border:1px solid rgba(77,141,255,.25);color:#cfe0ff;transition:.2s}
+.tags span:hover{background:rgba(56,225,255,.18);border-color:var(--cyan);transform:translateY(-2px)}
+
+/* ========== PROJECTS ========== */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:20px}
+.project{display:flex;flex-direction:column;position:relative;overflow:hidden;transform-style:preserve-3d;will-change:transform}
+.project::before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(56,225,255,.12),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+.project:hover::before{opacity:1}
+.project h3{font-size:1.2rem;margin-bottom:6px}
+.problem{color:var(--cyan);font-size:.9rem;margin-bottom:10px}
+.project ul{color:var(--muted);font-size:.93rem;padding-left:18px;margin-bottom:18px;flex:1}
+.project li{margin-bottom:6px}
+.plink{display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--cyan);font-weight:600;font-size:.9rem}
+.plink:hover{text-decoration:underline}
+
+/* ========== TIMELINE ========== */
+.timeline{position:relative;padding-left:28px;display:grid;gap:22px}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cyan),var(--violet),transparent)}
+.item{position:relative}
+.item::before{content:"";position:absolute;left:-28px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan)}
+.item .when{font-family:var(--mono);font-size:.82rem;color:var(--cyan)}
+.item h3{font-size:1.1rem}
+.item .org{color:var(--muted);font-size:.93rem;margin-bottom:8px}
+.item ul{color:var(--muted);font-size:.93rem;padding-left:18px}
+.item li{margin-bottom:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two h2{margin-bottom:26px}
+.list{list-style:none;display:grid;gap:12px}
+.list li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:.95rem;display:flex;flex-direction:column;transition:border-color .2s}
+.list li:hover{border-color:var(--cyan)}
+.list small{color:var(--muted)}
+.edu{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;margin-bottom:22px}
+.edu h3{font-size:1.25rem}
+.edu p{color:var(--muted)}
+.edu .cg{text-align:center;padding:12px 26px;border-radius:14px;border:1px solid var(--line);background:rgba(56,225,255,.06)}
+.edu .cg b{font-size:2rem;color:var(--cyan);display:block;line-height:1.2}
+
+/* ========== CONTACT / FOOTER ========== */
+.contact{text-align:center;background:linear-gradient(180deg,var(--bg2),var(--bg));border-top:1px solid var(--line)}
+.contact .lead{margin-inline:auto}
+.cinfo{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.9rem}
+.foot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+.foot nav{height:auto;gap:18px}
+.foot a:hover{color:var(--cyan)}
+
+/* ========== REVEAL (one gentle effect) ========== */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:860px){
+  .hero,.about,.two{grid-template-columns:1fr}
+  .viz{max-width:340px;order:-1}
+  .burger{display:grid;place-items:center}
+  .links{position:absolute;top:66px;left:0;right:0;flex-direction:column;background:rgba(10,18,38,.97);border-bottom:1px solid var(--line);padding:12px 4%;display:none}
+  .links.open{display:flex}
+  .links a{display:block}
+  section{padding:72px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+
+<header id="top-bar">
+  <nav class="wrap" aria-label="Main navigation">
+    <a href="#home" class="logo" aria-label="Rutik Tetare, home">rutik<span>.</span>tetare</a>
+    <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="menu">
+      <svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <ul class="links" id="menu">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+<!-- ================= HOME ================= -->
+<section id="home" aria-labelledby="h1">
+  <div class="wrap hero">
+    <div>
+      <p class="hello">Hi, I'm</p>
+      <h1 id="h1">Rutik Tetare</h1>
+      <p class="role" aria-live="off">Computer Engineering student building <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
+      <p class="intro">I work with Python, machine learning, SQL and Power BI to turn raw data into models, dashboards and automations. I'm looking for internships and entry-level roles in AI/ML and data.</p>
+      <div class="btns">
+        <a class="btn primary" href="#projects">View my projects</a>
+        <a class="btn" href="#contact">Contact me</a>
+      </div>
+      <div class="social">
+        <a href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5m12 5v-3.5a3 3 0 0 0-.8-2.3c2.800-.3 5.800-1.400 5.800-6.200A4.800 4.800 0 0 0 20.700 5 4.500 4.500 0 0 0 20.600 1.800S19.500 1.500 17 3.200a12 12 0 0 0-6 0C8.500 1.500 7.400 1.800 7.400 1.800A4.500 4.500 0 0 0 7.300 5 4.800 4.800 0 0 0 6 8.300c0 4.800 3 5.900 5.800 6.200a3 3 0 0 0-.8 2.300V21"/></svg>GitHub</a>
+        <a href="https://linkedin.com/in/rutik-tetare" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>LinkedIn</a>
+        <a href="Rutik_Tetare_Resume.pdf" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h8"/></svg>Resume</a>
+      </div>
+    </div>
+    <figure class="viz" aria-label="Animation of K-Means clustering, a machine learning algorithm">
+      <canvas id="kmeans"></canvas>
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <figcaption id="iter">kmeans(k=3) · live</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap about">
+    <div class="reveal">
+      <h2 id="about-h">About me</h2>
+      <p>I'm a <strong>B.Tech Computer Engineering</strong> student at Government College of Engineering, Yavatmal, studying AI, machine learning, databases and statistics.</p>
+      <p>I like taking a messy dataset through the whole path: cleaning, exploring, building features, training a model and presenting the result. My projects cover <strong>ML classification</strong>, <strong>retail analytics dashboards</strong> and <strong>market behavior analysis</strong>.</p>
+      <p>I've also built Python automation tools, including a voice-controlled email assistant, and I'm familiar with Generative AI and LLM-based workflows. My goal is to use these skills to automate and improve business operations.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b data-to="8.19" data-dec="2">0</b><span>CGPA out of 10</span></div>
+      <div class="stat"><b data-to="95" data-suffix="%+">0</b><span>Accuracy, AgriPredict model</span></div>
+      <div class="stat"><b data-to="2" data-suffix=" internships">0</b><span>Data and AI, remote</span></div>
+      <div class="stat"><b data-to="4" data-suffix=" certificates">0</b><span>Data science and AI</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <h2 id="skills-h" class="reveal">Technical skills</h2>
+    <p class="lead reveal">The tools I use across machine learning, data analysis and automation.</p>
+    <div class="skills reveal">
+      <div class="card"><h3>Programming</h3><div class="tags"><span>Python</span><span>SQL</span></div></div>
+      <div class="card"><h3>AI and machine learning</h3><div class="tags"><span>Scikit-learn</span><span>Decision Trees</span><span>K-Means Clustering</span><span>Regression Models</span><span>Feature Engineering</span><span>Model Evaluation</span><span>Hyperparameter Tuning</span></div></div>
+      <div class="card"><h3>Data science</h3><div class="tags"><span>Pandas</span><span>NumPy</span><span>EDA</span><span>Data Cleaning</span><span>Preprocessing</span><span>Statistical Analysis</span><span>Hypothesis Testing</span></div></div>
+      <div class="card"><h3>Automation and integration</h3><div class="tags"><span>Workflow Automation</span><span>API Integration</span><span>Document Processing</span><span>Report Generation</span></div></div>
+      <div class="card"><h3>Visualization and BI</h3><div class="tags"><span>Power BI</span><span>DAX</span><span>Power Query</span><span>Matplotlib</span><span>Seaborn</span></div></div>
+      <div class="card"><h3>Tools</h3><div class="tags"><span>Jupyter Notebook</span><span>Git</span><span>GitHub</span><span>Microsoft Excel</span><span>MySQL</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects" aria-labelledby="proj-h" style="background:var(--bg2)">
+  <div class="wrap">
+    <h2 id="proj-h" class="reveal">Featured projects</h2>
+    <p class="lead reveal">Three projects covering analytics, machine learning and market data.</p>
+    <div class="projects">
+      <article class="card project reveal">
+        <h3>Retail Sales Analytics</h3>
+        <p class="problem">Problem: understand which customers, products and periods drive sales.</p>
+        <ul>
+          <li>Analyzed retail sales data with SQL and Excel.</li>
+          <li>Ran RFM analysis to segment customers by recency, frequency and monetary value.</li>
+          <li>Built an interactive Power BI dashboard with Power Query and DAX showing trends, segments and KPIs.</li>
+        </ul>
+        <div class="tags"><span>SQL</span><span>Power BI</span><span>Power Query</span><span>DAX</span><span>Excel</span></div>
+        <a class="plink" href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener">View on GitHub</a>
+      </article>
+
+      <article class="card project reveal">
+        <h3>AgriPredict: Crop and Fertilizer Recommendation</h3>
+        <p class="problem">Problem: choose the right crop and fertilizer from soil, pH and climate data.</p>
+        <ul>
+          <li>Decision Tree classifier with 95%+ accuracy.</li>
+          <li>Full pipeline: cleaning, feature engineering, outlier removal and cross-validation.</li>
+          <li>Recommendations reduce fertilizer costs by 20% while improving crop yield.</li>
+        </ul>
+        <div class="tags"><span>Python</span><span>Scikit-learn</span><span>Pandas</span><span>Decision Tree</span></div>
+        <a class="plink" href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener">View on GitHub</a>
+      </article>
+
+      <article class="card project reveal">
+        <h3>Hyperliquid Trader Behavior vs. Bitcoin Sentiment</h3>
+        <p class="problem">Problem: see how market sentiment changes the way traders behave.</p>
+        <ul>
+          <li>Analyzed on-chain trader leverage, PnL and position size on the Hyperliquid DEX.</li>
+          <li>Engineered sentiment-driven features and used hypothesis testing to find behavior shifts across bull and bear cycles.</li>
+          <li>Visualized cohort performance with multi-dimensional charts.</li>
+        </ul>
+        <div class="tags"><span>Python</span><span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>Seaborn</span></div>
+        <a class="plink" href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener">View on GitHub</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" aria-labelledby="exp-h">
+  <div class="wrap two">
+    <div class="reveal">
+      <h2 id="exp-h">Experience</h2>
+      <div class="timeline">
+        <div class="item">
+          <span class="when">Aug 2026 – Sep 2026</span>
+          <h3>Data Analyst Intern</h3>
+          <p class="org">Kinetrexa Software Private Limited · Remote</p>
+          <ul>
+            <li>Analyzed retail sales data with Excel and SQL to find trends, product performance and business insights.</li>
+            <li>Built an interactive Power BI dashboard with Power Query and DAX, with KPIs for sales performance.</li>
+          </ul>
+        </div>
+        <div class="item">
+          <span class="when">Feb 2025 – Mar 2025</span>
+          <h3>AI Intern</h3>
+          <p class="org">Infosys Springboard · Remote</p>
+          <ul>
+            <li>Built a voice-based email assistant in Python (SpeechRecognition, pyttsx3, smtplib) that reads, composes and sends email by voice.</li>
+            <li>Developed and tested ML models with Scikit-learn: preprocessing, feature selection, training, evaluation and debugging.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h2>Certifications</h2>
+      <ul class="list">
+        <li>Data Science Foundations<small>Oracle Certified</small></li>
+        <li>Python for Data Science<small>Reliance Foundation</small></li>
+        <li>Machine Learning Training<small>Internshala</small></li>
+        <li>AI Tools<small>GeeksforGeeks</small></li>
+      </ul>
+      <h2 style="margin-top:40px">Leadership</h2>
+      <ul class="list">
+        <li>NSS Volunteer<small>Led community service drives and social awareness campaigns.</small></li>
+        <li>CESA Committee Member<small>Co-organized technical events, workshops and hackathons for the Computer Engineering Students Association.</small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education" aria-labelledby="edu-h" style="background:var(--bg2)">
+  <div class="wrap">
+    <h2 id="edu-h" class="reveal">Education</h2>
+    <div class="edu reveal">
+      <div>
+        <h3>B.Tech in Computer Engineering (DBATU)</h3>
+        <p>Government College of Engineering, Yavatmal, Maharashtra</p>
+        <p>Expected graduation: May 2027</p>
+      </div>
+      <div class="cg"><b>8.19</b><small>CGPA / 10.0</small></div>
+    </div>
+    <div class="tags reveal" aria-label="Relevant coursework">
+      <span>Artificial Intelligence</span><span>Machine Learning</span><span>Database Management Systems</span><span>Statistics and Probability</span><span>Data Structures and Algorithms</span><span>Linear Algebra</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact" aria-labelledby="contact-h">
+  <div class="wrap reveal">
+    <h2 id="contact-h">Let's talk</h2>
+    <p class="lead">I'm open to internships and entry-level roles in AI/ML, data analytics and automation. Email is the quickest way to reach me.</p>
+    <a class="btn primary" href="mailto:rutiktetare@gmail.com?subject=Opportunity%20for%20Rutik%20Tetare">Email me</a>
+    <div class="cinfo">
+      <a class="btn" href="mailto:rutiktetare@gmail.com">rutiktetare@gmail.com</a>
+      <a class="btn" href="tel:+918767617087">+91 87676 17087</a>
+      <a class="btn" href="https://linkedin.com/in/rutik-tetare" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year"></span> Rutik Tetare · Yavatmal, Maharashtra</span>
+    <nav aria-label="Footer">
+      <a href="https://github.com/Rutik-tetare29" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/rutik-tetare" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#home">Back to top</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(s){return document.querySelector(s)};
+
+  /* Footer year */
+  $("#year").textContent = new Date().getFullYear();
+
+  /* Mobile menu */
+  var burger = $("#burger"), menu = $("#menu");
+  burger.addEventListener("click", function(){
+    var open = menu.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open);
+  });
+  menu.addEventListener("click", function(e){
+    if(e.target.tagName === "A"){ menu.classList.remove("open"); burger.setAttribute("aria-expanded", false); }
+  });
+
+  /* Scroll progress, header style */
+  var bar = $("#progress"), head = $("#top-bar");
+  function onScroll(){
+    var h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
+    head.classList.toggle("scrolled", h.scrollTop > 30);
+  }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* Active nav link */
+  var links = [].slice.call(document.querySelectorAll(".links a"));
+  var spy = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id); });
+      }
+    });
+  }, {rootMargin:"-45% 0px -50% 0px"});
+  document.querySelectorAll("main section").forEach(function(s){ spy.observe(s); });
+
+  /* Scroll reveal + stat counters */
+  function count(el){
+    var to = parseFloat(el.dataset.to), dec = +(el.dataset.dec||0), suf = el.dataset.suffix||"";
+    if(reduce){ el.textContent = to.toFixed(dec) + suf; return; }
+    var t0 = performance.now();
+    (function step(t){
+      var p = Math.min((t - t0)/1400, 1), v = to * (1 - Math.pow(1 - p, 3));
+      el.textContent = v.toFixed(dec) + suf;
+      if(p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add("in");
+      e.target.querySelectorAll("[data-to]").forEach(count);
+      io.unobserve(e.target);
+    });
+  }, {threshold:.15});
+  document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+
+  /* Typing effect */
+  var words = ["ML models in Python.", "Power BI dashboards.", "AI-powered automations.", "data-driven insights."];
+  var tEl = $("#typed"), wi = 0, ci = 0, del = false;
+  if(reduce){ tEl.textContent = words[0]; }
+  else (function type(){
+    var w = words[wi];
+    tEl.textContent = w.slice(0, ci);
+    if(!del && ci === w.length){ del = true; return setTimeout(type, 1600); }
+    if(del && ci === 0){ del = false; wi = (wi + 1) % words.length; }
+    ci += del ? -1 : 1;
+    setTimeout(type, del ? 35 : 70);
+  })();
+
+  /* Project card spotlight + light tilt (pointer devices only) */
+  if(!reduce && window.matchMedia("(hover:hover)").matches){
+    document.querySelectorAll(".project").forEach(function(c){
+      c.addEventListener("mousemove", function(e){
+        var r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        c.style.setProperty("--mx", x + "px"); c.style.setProperty("--my", y + "px");
+        c.style.transform = "perspective(900px) rotateX(" + ((y/r.height - .5) * -5) + "deg) rotateY(" + ((x/r.width - .5) * 5) + "deg)";
+      });
+      c.addEventListener("mouseleave", function(){ c.style.transform = ""; });
+    });
+  }
+
+  /* Hero: live K-Means clustering animation */
+  var cv = $("#kmeans"), ctx = cv.getContext("2d"), W, H, dpr;
+  var colors = ["#38e1ff", "#9b7bff", "#4d8dff"];
+  var pts = [], cents = [], frame = 0, iter = 0, lastTick = 0;
+  function size(){
+    dpr = window.devicePixelRatio || 1;
+    var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function init(){
+    pts = []; cents = [];
+    var seeds = [[.28,.3],[.72,.35],[.5,.74]];
+    for(var i = 0; i < 90; i++){
+      var s = seeds[i % 3];
+      pts.push({x:(s[0] + (Math.random() - .5) * .38) * W, y:(s[1] + (Math.random() - .5) * .38) * H, c:0});
+    }
+    for(var k = 0; k < 3; k++) cents.push({x:Math.random() * W, y:Math.random() * H});
+  }
+  function assign(){
+    pts.forEach(function(p){
+      var best = 0, bd = 1e9;
+      cents.forEach(function(c, k){ var d = (p.x - c.x) * (p.x - c.x) + (p.y - c.y) * (p.y - c.y); if(d < bd){ bd = d; best = k; } });
+      p.c = best;
+    });
+  }
+  function update(){
+    cents.forEach(function(c, k){
+      var sx = 0, sy = 0, n = 0;
+      pts.forEach(function(p){ if(p.c === k){ sx += p.x; sy += p.y; n++; } });
+      if(n){ c.tx = sx / n; c.ty = sy / n; }
+    });
+    iter++;
+    $("#iter").textContent = "kmeans(k=3) · iteration " + iter;
+    if(iter > 7){ iter = 0; init(); }
+  }
+  function draw(now){
+    ctx.clearRect(0, 0, W, H);
+    // grid
+    ctx.strokeStyle = "rgba(157,176,211,.07)"; ctx.lineWidth = 1;
+    for(var g = 0; g < W; g += 34){ ctx.beginPath(); ctx.moveTo(g, 0); ctx.lineTo(g, H); ctx.stroke(); }
+    for(var h = 0; h < H; h += 34){ ctx.beginPath(); ctx.moveTo(0, h); ctx.lineTo(W, h); ctx.stroke(); }
+    if(!reduce && now - lastTick > 900){ lastTick = now; assign(); update(); }
+    cents.forEach(function(c){
+      if(c.tx !== undefined){ c.x += (c.tx - c.x) * .06; c.y += (c.ty - c.y) * .06; }
+    });
+    pts.forEach(function(p){
+      var c = cents[p.c];
+      ctx.strokeStyle = colors[p.c] + "22"; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(c.x, c.y); ctx.stroke();
+      ctx.fillStyle = colors[p.c]; ctx.beginPath(); ctx.arc(p.x, p.y, 3.2, 0, 6.283); ctx.fill();
+    });
+    cents.forEach(function(c, k){
+      ctx.strokeStyle = colors[k]; ctx.lineWidth = 2; ctx.fillStyle = "#0a1226";
+      ctx.beginPath(); ctx.arc(c.x, c.y, 9, 0, 6.283); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.arc(c.x, c.y, 16 + Math.sin(now / 400 + k) * 3, 0, 6.283); ctx.globalAlpha = .35; ctx.stroke(); ctx.globalAlpha = 1;
+    });
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  size(); init(); assign(); update(); iter = 0;
+  if(reduce){ for(var r = 0; r < 6; r++){ assign(); update(); cents.forEach(function(c){ c.x = c.tx; c.y = c.ty; }); } draw(0); }
+  else requestAnimationFrame(draw);
+  window.addEventListener("resize", function(){ size(); init(); assign(); if(reduce) draw(0); });
+})();
+</script>
+</body>
+</html>
